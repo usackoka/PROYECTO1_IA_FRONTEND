@@ -102,7 +102,7 @@ const MenuBar = props => {
           </ListItem>
           <ListItem button key={1} onClick={()=>{goTo('/crud')}}>
             <ListItemIcon><GroupAddIcon /></ListItemIcon>
-            <ListItemText primary={"Registrar Privado"} />
+            <ListItemText primary={"Buscar en el Zoo"} />
           </ListItem>
         </List>
         <Divider />

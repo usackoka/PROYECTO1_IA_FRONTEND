@@ -9,7 +9,7 @@ import Fab from '@material-ui/core/Fab';
 import {db} from '../../../../firebase'
 import Swal from 'sweetalert2';
 
-const CRUDPrivados = props => {
+const CRUDComponent = props => {
   const classes = useStyles();
   const [data,setData] = useState({
     nombre:"",
@@ -100,4 +100,4 @@ const CRUDPrivados = props => {
   );
 }
 
-export default CRUDPrivados;
+export default CRUDComponent;

@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import MaterialTable from 'material-table';
 import { db } from '../../../../firebase'
-import { useStyles } from '../Crud/material.styles'
+import { useStyles } from '../Search/material.styles'
 import { Grid, Paper, Button, TextField } from '@material-ui/core';
 import Swal from 'sweetalert2';
 
-const ListPrivados = props => {
+const ListComponent = props => {
   const classes = useStyles();
   const [busqueda1, setBusqueda1] = useState({
     grupo: ""
@@ -137,4 +137,4 @@ const ListPrivados = props => {
   );
 }
 
-export default ListPrivados;
+export default ListComponent;

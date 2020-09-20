@@ -1,7 +1,7 @@
-import { privadosConfig } from './module.privados/privados.config'
+import { routeConfig } from './module.zoo/route.config'
 
 const appsConfig = [
-    privadosConfig,
+    routeConfig,
 ];
 
 export default appsConfig;
