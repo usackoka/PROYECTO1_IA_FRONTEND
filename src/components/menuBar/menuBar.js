@@ -42,7 +42,7 @@ const MenuBar = props => {
     Swal.fire({
       title: "Acerca de",
       html:
-        "Práctica 1 del curso Inteligencia Artificial 1<br/><br/>Oscar René Cuéllar Mancilla - 201503712"+
+        "Proyecto 1 del curso Inteligencia Artificial 1<br/><br/>Oscar René Cuéllar Mancilla - 201503712"+
         "<br/>David Andrés Alcázar Escobar - 201504480",
       icon: "info",
       confirmButtonColor: "#3085d6",
@@ -72,7 +72,7 @@ const MenuBar = props => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Practica 1 Inteligencia Artificial - 201503712 / 201504480
+            Proyecto 1 Inteligencia Artificial - 201503712 / 201504480
           </Typography>
         </Toolbar>
       </AppBar>
@@ -100,7 +100,7 @@ const MenuBar = props => {
             <ListItemIcon><SearchIcon /></ListItemIcon>
             <ListItemText primary={"Consultas"} />
           </ListItem>
-          <ListItem button key={1} onClick={()=>{goTo('/crud')}}>
+          <ListItem button key={1} onClick={()=>{goTo('/search')}}>
             <ListItemIcon><GroupAddIcon /></ListItemIcon>
             <ListItemText primary={"Buscar en el Zoo"} />
           </ListItem>
