@@ -25,32 +25,39 @@ const ListComponent = props => {
       return data.text()
     }
 
+    const catchAnswer = (answer) => {
+      console.log(answer)
+      if(answer){
+        session.answer({
+          success:catchAnswer,
+          error: function (err) { /* Uncaught error */ },
+          fail: function () { /* Fail */ },
+          limit: function () { /* Limit exceeded */ }
+        })
+      }
+    }
+
     const consult = async () => {
       const data = await getPrologBase();
-      console.log(data)
+      const query = 'vertebrado(X).'
+
       session.consult(`${data}`, {
-        success: function () { /* Program loaded correctly */ },
-        error: function (err) { /* Error parsing program */ }
-      });
-
-      session.query("vertebrado(X).", {
-        success: function (goal) { /* Goal loaded correctly */ },
-        error: function (err) { /* Error parsing program */ }
-      });
-
-      session.answer({
-        success: function (answer) {
-          console.log(session.format_answer(answer)); // X = salad ;
-          session.answer({
-            success: function (answer) {
-              console.log(session.format_answer(answer)); // X = apples ;
+        success: function () {
+          // Query
+          session.query(query, {
+            success: function (goal) {
+              // Answers
+              session.answer({
+                success: catchAnswer,
+                error: function (err) { /* Uncaught error */ },
+                fail: function () { /* Fail */ },
+                limit: function () { /* Limit exceeded */ }
+              })
             },
-            // ...
+            error: function (err) { /* Error parsing goal */ }
           });
         },
-        fail: function () { /* No more answers */ },
-        error: function (err) { /* Uncaught exception */ },
-        limit: function () { /* Limit exceeded */ }
+        error: function (err) { /* Error parsing program */ }
       });
     }
 
