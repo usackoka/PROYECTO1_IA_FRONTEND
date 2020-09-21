@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MaterialTable from 'material-table';
 import { useStyles } from './material.styles'
 import { Grid, Paper, Button, TextField } from '@material-ui/core';
@@ -7,8 +7,8 @@ import pl from 'tau-prolog'
 
 const ListComponent = props => {
 
-  const prologSession = pl.create();
-
+  const PATH_PROLOG_FILE = '@prolog/base.pl'
+  const session = pl.create();
   const classes = useStyles();
 
   const [state, setState] = useState({
@@ -17,6 +17,52 @@ const ListComponent = props => {
     ],
     data: [],
   });
+
+  useEffect(() => {
+
+    const getPrologBase = async () => {
+      const data = await fetch(PATH_PROLOG_FILE);
+      return data.text()
+    }
+
+    const consult = async () => {
+      const data = await getPrologBase();
+      console.log(data)
+      session.consult(`
+          likes(sam, salad).
+          likes(dean, pie).
+          likes(sam, apples).
+          likes(dean, whiskey).
+      `, {
+        success: function () { /* Program loaded correctly */ },
+        error: function (err) { /* Error parsing program */ }
+      });
+
+      
+
+    session.query("likes(sam, X).", {
+      success: function (goal) { /* Goal loaded correctly */ },
+      error: function (err) { /* Error parsing program */ }
+    });
+    
+    session.answer({
+      success: function (answer) {
+        console.log(session.format_answer(answer)); // X = salad ;
+        session.answer({
+          success: function (answer) {
+            console.log(session.format_answer(answer)); // X = apples ;
+          },
+          // ...
+        });
+      },
+      fail: function () { /* No more answers */ },
+      error: function (err) { /* Uncaught exception */ },
+      limit: function () { /* Limit exceeded */ }
+    });
+    }
+
+    consult()
+  }, [])
 
   return (
     <>
