@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import MaterialTable from 'material-table';
 import { useStyles } from './material.styles'
-import { Grid, Paper, Button, TextField } from '@material-ui/core';
+import { Grid, Paper, Button, TextField, FormControlLabel, Form } from '@material-ui/core';
 import Swal from 'sweetalert2';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
@@ -14,6 +14,7 @@ const ListComponent = props => {
   const classes = useStyles();
   const animatedComponents = makeAnimated();
   const [tableVisible, setTableVisible] = useState(true)
+  const [nombreBusqueda, setNombreBusqueda] = useState("")
 
   const multiSelectValues = [
     { value: 'lbaja', label: 'Longevidad Baja' },
@@ -92,6 +93,22 @@ const ListComponent = props => {
               onMenuOpen={() => { setTableVisible(false) }}
               onMenuClose={() => { setTableVisible(true) }}
             />
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <h3>Posee esas características?</h3>
+            <TextField
+              required id="standard-required"
+              name="nombre"
+              value={nombreBusqueda}
+              onChange={(e) => { setNombreBusqueda(e.target.value) }}
+              label="Nombre del animal"
+              helperText="Nombre del animal a buscar"
+            />
+            <Button 
+              variant="contained" 
+              color="primary">Consultar</Button>
           </Paper>
         </Grid>
         <Grid item xs={12}>
