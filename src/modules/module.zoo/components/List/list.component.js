@@ -3,6 +3,8 @@ import MaterialTable from 'material-table';
 import { useStyles } from './material.styles'
 import { Grid, Paper, Button, TextField } from '@material-ui/core';
 import Swal from 'sweetalert2';
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
 import pl from 'tau-prolog'
 
 const ListComponent = props => {
@@ -10,6 +12,19 @@ const ListComponent = props => {
   const PATH_PROLOG_FILE = '@prolog/base.pl'
   const session = pl.create();
   const classes = useStyles();
+  const animatedComponents = makeAnimated();
+  const [tableVisible, setTableVisible] = useState(true)
+
+  const multiSelectValues = [
+    { value: 'lbaja', label: 'Longevidad Baja' },
+    { value: 'lnormal', label: 'Longevidad Normal' },
+    { value: 'lalta', label: 'Longevidad Alta' },
+    { value: 'pez', label: 'Pez' },
+    { value: 'anfibio', label: 'Anfibio' },
+    { value: 'reptil', label: 'Reptil' },
+    { value: 'invertebrado', label: 'Invertebrado' },
+    { value: 'vertebrado', label: 'Vertebrado' },
+  ];
 
   const [state, setState] = useState({
     columns: [
@@ -27,9 +42,9 @@ const ListComponent = props => {
 
     const catchAnswer = (answer) => {
       console.log(answer)
-      if(answer){
+      if (answer) {
         session.answer({
-          success:catchAnswer,
+          success: catchAnswer,
           error: function (err) { /* Uncaught error */ },
           fail: function () { /* Fail */ },
           limit: function () { /* Limit exceeded */ }
@@ -69,12 +84,27 @@ const ListComponent = props => {
       <Grid container spacing={3} justify="center" alignItems="stretch">
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <MaterialTable
-              title="Resultados"
-              columns={state.columns}
-              data={state.data}
+            <Select
+              closeMenuOnSelect={false}
+              components={animatedComponents}
+              isMulti
+              options={multiSelectValues}
+              onMenuOpen={() => { setTableVisible(false) }}
+              onMenuClose={() => { setTableVisible(true) }}
             />
           </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          {
+            tableVisible ?
+              <Paper className={classes.paper}>
+                <MaterialTable
+                  title="Resultados"
+                  columns={state.columns}
+                  data={state.data}
+                />
+              </Paper> : null
+          }
         </Grid>
       </Grid>
     </>

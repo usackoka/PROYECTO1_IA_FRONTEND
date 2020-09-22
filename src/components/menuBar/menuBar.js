@@ -96,12 +96,8 @@ const MenuBar = props => {
         </div>
         <Divider />
         <List>
-          <ListItem button key={0} onClick={()=>{goTo('/')}}>
+          <ListItem button key={1} onClick={()=>{goTo('/')}}>
             <ListItemIcon><SearchIcon /></ListItemIcon>
-            <ListItemText primary={"Consultas"} />
-          </ListItem>
-          <ListItem button key={1} onClick={()=>{goTo('/search')}}>
-            <ListItemIcon><GroupAddIcon /></ListItemIcon>
             <ListItemText primary={"Buscar en el Zoo"} />
           </ListItem>
         </List>
