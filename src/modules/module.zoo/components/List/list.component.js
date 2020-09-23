@@ -10,45 +10,51 @@ import pl from 'tau-prolog'
 const ListComponent = props => {
 
   const PATH_PROLOG_FILE = '@prolog/base.pl'
-  const session = pl.create();
+  const session = pl.create(1000);
   const classes = useStyles();
   const animatedComponents = makeAnimated();
   const [tableVisible, setTableVisible] = useState(true)
   const [nombreBusqueda, setNombreBusqueda] = useState("")
 
   const multiSelectValues = [
-    { value: 'lbaja', label: 'Longevidad Baja' },
-    { value: 'lnormal', label: 'Longevidad Normal' },
-    { value: 'lalta', label: 'Longevidad Alta' },
-    { value: 'pez', label: 'Pez' },
+    { value: 'longevidadBaja', label: 'Longevidad Baja' },
+    { value: 'longevidadMedia', label: 'Longevidad Normal' },
+    { value: 'longevidadAlta', label: 'Longevidad Alta' },
+    { value: 'peces', label: 'Pez' },
     { value: 'anfibio', label: 'Anfibio' },
-    { value: 'reptil', label: 'Reptil' },
-    { value: 'invertebrado', label: 'Invertebrado' },
-    { value: 'vertebrado', label: 'Vertebrado' },
+    { value: 'reptiles', label: 'Reptil' },
+    { value: 'invertebrados', label: 'Invertebrado' },
+    { value: 'vertebrados', label: 'Vertebrado' },
   ];
 
-  const [state, setState] = useState({
-    columns: [
-      { title: 'Nombre', field: 'nombre' },
-      { title: 'Nombre cientifico', field: 'nombrec' },
-    ],
-    data: [],
-  });
+  const [columns, setColumns] = useState([
+    { title: 'Nombre', field: 'nombre' },
+    { title: 'Nombre cientifico', field: 'nombrec' },
+  ]);
+  const [data, setData] = useState([]);
 
   const onSelectChange = (data,e) => {
+    var query = "";
+    for(const item of data){
+      query += item.value+"(X),";
+    }
+    query = query.substr(0,query.length-1);
+    query+='.'
     
+    consultProlog(query)
   }
 
-  const catchAnswer = (answer) => {
-    if (answer) {
-      console.log(answer)
-      session.answer({
-        success: catchAnswer,
-        error: function (err) { /* Uncaught error */ },
-        fail: function () { /* Fail */ },
-        limit: function () { /* Limit exceeded */ }
-      })
-    }
+  function getResults() {
+    // Return callback function
+    return function(answer) {
+      // Valid answer
+      if(pl.type.is_substitution(answer)) {
+        // Get the value of the response
+        var X = answer.lookup("X");
+        // Show answer
+        setData([...data,{nombre:X.id}])
+      }
+    };
   }
 
   const consultProlog = async (query) => {
@@ -57,26 +63,11 @@ const ListComponent = props => {
       return res.text()
     }
 
-    const data = await getPrologBase();
+    const fileContent = await getPrologBase();
 
-    session.consult(`${data}`, {
-      success: function () {
-        // Query
-        session.query(query, {
-          success: function (goal) {
-            // Answers
-            session.answer({
-              success: catchAnswer,
-              error: function (err) { /* Uncaught error */ },
-              fail: function () { /* Fail */ },
-              limit: function () { /* Limit exceeded */ }
-            })
-          },
-          error: function (err) { alert('error en query prolog.'+err); }
-        });
-      },
-      error: function (err) { alert('error en consult prolog file '+err); }
-    });
+    session.consult(`${fileContent}`);
+    session.query(query)
+    session.answers(getResults(), 1000);
   }
 
   useEffect(() => {
@@ -122,8 +113,8 @@ const ListComponent = props => {
               <Paper className={classes.paper}>
                 <MaterialTable
                   title="Resultados"
-                  columns={state.columns}
-                  data={state.data}
+                  columns={columns}
+                  data={data}
                 />
               </Paper> : null
           }
