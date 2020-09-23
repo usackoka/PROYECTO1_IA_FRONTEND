@@ -30,54 +30,58 @@ const ListComponent = props => {
   const [state, setState] = useState({
     columns: [
       { title: 'Nombre', field: 'nombre' },
+      { title: 'Nombre cientifico', field: 'nombrec' },
     ],
     data: [],
   });
 
-  useEffect(() => {
+  const onSelectChange = (data,e) => {
+    
+  }
 
-    const getPrologBase = async () => {
-      const data = await fetch(PATH_PROLOG_FILE);
-      return data.text()
-    }
-
-    const catchAnswer = (answer) => {
+  const catchAnswer = (answer) => {
+    if (answer) {
       console.log(answer)
-      if (answer) {
-        session.answer({
-          success: catchAnswer,
-          error: function (err) { /* Uncaught error */ },
-          fail: function () { /* Fail */ },
-          limit: function () { /* Limit exceeded */ }
-        })
-      }
+      session.answer({
+        success: catchAnswer,
+        error: function (err) { /* Uncaught error */ },
+        fail: function () { /* Fail */ },
+        limit: function () { /* Limit exceeded */ }
+      })
+    }
+  }
+
+  const consultProlog = async (query) => {
+    const getPrologBase = async () => {
+      const res = await fetch(PATH_PROLOG_FILE);
+      return res.text()
     }
 
-    const consult = async () => {
-      const data = await getPrologBase();
-      const query = 'vertebrado(X).'
+    const data = await getPrologBase();
 
-      session.consult(`${data}`, {
-        success: function () {
-          // Query
-          session.query(query, {
-            success: function (goal) {
-              // Answers
-              session.answer({
-                success: catchAnswer,
-                error: function (err) { /* Uncaught error */ },
-                fail: function () { /* Fail */ },
-                limit: function () { /* Limit exceeded */ }
-              })
-            },
-            error: function (err) { /* Error parsing goal */ }
-          });
-        },
-        error: function (err) { /* Error parsing program */ }
-      });
-    }
+    session.consult(`${data}`, {
+      success: function () {
+        // Query
+        session.query(query, {
+          success: function (goal) {
+            // Answers
+            session.answer({
+              success: catchAnswer,
+              error: function (err) { /* Uncaught error */ },
+              fail: function () { /* Fail */ },
+              limit: function () { /* Limit exceeded */ }
+            })
+          },
+          error: function (err) { alert('error en query prolog.'+err); }
+        });
+      },
+      error: function (err) { alert('error en consult prolog file '+err); }
+    });
+  }
 
-    consult()
+  useEffect(() => {
+    //muestro todos los animales al inicio
+    consultProlog('sienten(X).')
   }, [])
 
   return (
@@ -92,6 +96,7 @@ const ListComponent = props => {
               options={multiSelectValues}
               onMenuOpen={() => { setTableVisible(false) }}
               onMenuClose={() => { setTableVisible(true) }}
+              onChange={onSelectChange}
             />
           </Paper>
         </Grid>
