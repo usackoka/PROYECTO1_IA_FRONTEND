@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import pl from 'tau-prolog'
+import ModalInfo from '../ModalInfo';
 
 const ListComponent = props => {
 
@@ -15,6 +16,8 @@ const ListComponent = props => {
   const animatedComponents = makeAnimated();
   const [tableVisible, setTableVisible] = useState(true)
   const [nombreBusqueda, setNombreBusqueda] = useState("")
+  const [open,setOpen] = useState(false)
+  const [infoModal, setInfoModal] = useState({});
 
   const multiSelectValues = [
     { value: 'longevidadBaja', label: 'Longevidad Baja' },
@@ -29,8 +32,17 @@ const ListComponent = props => {
   const [columns, setColumns] = useState([
     { title: 'Nombre', field: 'nombre' },
     { title: 'Nombre cientifico', field: 'nombrec' },
+    { title: 'Información', render: (cell,row,rowIndex) => (<Button color="primary" onClick={()=>{clickVerMas(row)}}>Ver más</Button>) },
   ]);
-  const [data, setData] = useState([]);
+
+  const [data, setData] = useState([{
+    nombre:'Vaca',
+    nombrec: 'Bos Taurus'
+  }]);
+
+  const clickVerMas = (row) => {
+    setInfoModal(row)
+  }
 
   const onSelectChange = (data,e) => {
     var query = "";
@@ -52,7 +64,7 @@ const ListComponent = props => {
         var X = answer.lookup("X");
         // Show answer
         console.log(data)
-        setData([...data,{nombre:X.id}])
+        //setData([...data,{nombre:X.id}])
       }
     };
   }
@@ -77,6 +89,11 @@ const ListComponent = props => {
 
   return (
     <>
+      <ModalInfo
+        open={open}
+        setOpen={setOpen}
+        info={infoModal}
+      />
       <Grid container spacing={3} justify="center" alignItems="stretch">
         <Grid item xs={12}>
           <Paper className={classes.paper}>
