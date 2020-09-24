@@ -32,17 +32,21 @@ const ListComponent = props => {
   const [columns, setColumns] = useState([
     { title: 'Nombre', field: 'nombre' },
     { title: 'Nombre cientifico', field: 'nombrec' },
-    { title: 'Información', render: (cell,row,rowIndex) => (<Button color="primary" onClick={()=>{clickVerMas(row)}}>Ver más</Button>) },
+    { title: 'Información', 
+      render: (row) => {
+        console.log(row)
+        return <Button 
+          color="primary" 
+          onClick={()=>{setInfoModal(row); setOpen(true)}}
+        >Ver más</Button>; 
+      }
+    }
   ]);
 
   const [data, setData] = useState([{
     nombre:'Vaca',
     nombrec: 'Bos Taurus'
   }]);
-
-  const clickVerMas = (row) => {
-    setInfoModal(row)
-  }
 
   const onSelectChange = (data,e) => {
     var query = "";
@@ -67,6 +71,19 @@ const ListComponent = props => {
         //setData([...data,{nombre:X.id}])
       }
     };
+  }
+
+  const handleConsultar = (e) => {
+    showMessage(false)
+  }
+
+  const showMessage = (posee) => {
+    Swal.fire({
+      icon:posee?'success':'error',
+      title:posee?'Sí':'No',
+      text:'El animal '+(posee?'si':'no')+' poseé las características',
+      timer:4000
+    })
   }
 
   const consultProlog = async (query) => {
@@ -121,6 +138,7 @@ const ListComponent = props => {
             />
             <Button 
               variant="contained" 
+              onClick={handleConsultar}
               color="primary">Consultar</Button>
           </Paper>
         </Grid>

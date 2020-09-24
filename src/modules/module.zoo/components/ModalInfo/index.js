@@ -16,7 +16,8 @@ const ModalInfo = props => {
     const { open, setOpen, info } = props;
 
     useEffect(() => {
-        if (info) {
+        console.log(info)
+        if (info?.nombre) {
             setOpen(true);
         }
     }, [info])
@@ -33,8 +34,8 @@ const ModalInfo = props => {
                     <CardActionArea>
                         <CardMedia
                             className={classes.media}
-                            image='/public/@images/vaca.jpg'
-                            //image={"/public/@images/"+info.nombre+".jpg"}
+                            image={'@images/'+info.nombre?.toLowerCase()+'.jpg'}
+                            //image={"/public/@images/"".jpg"}
                             title="Imagen"
                         />
                         <CardContent>
