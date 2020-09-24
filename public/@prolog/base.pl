@@ -1,12 +1,12 @@
 
 % animales (id,categoria,[altura,peso,longevidad,poblacion,velocidad,extra])
-animal(rep1,reptil,[0.5,120,5,5000,35,-]).
-animal(mol1,molusco,[1,3,9,000,35,marino]).
-animal(mol2,molusco,[3,120,20,6000,10,terrestre]).
-animal(pez1,pez,[10,120,45,5000,35,-]).
-animal(ave1,ave,[10,120,67,5000,0.3,vuelan]).
-animal(ave2,ave,[10,120,40,5000,1,novuelan]).
-animal(mam1,mamifero,[10,120,100,5000,0.9,-]).
+animal(serpiente,reptil,[0.5,120,5,5000,35,-]).
+animal(caracol,molusco,[1,3,9,000,35,marino]).
+animal(cangrejo,molusco,[3,120,20,6000,10,terrestre]).
+animal(pez_globo,pez,[10,120,45,5000,35,-]).
+animal(aguila,ave,[10,120,67,5000,0.3,vuelan]).
+animal(gallina,ave,[10,120,40,5000,1,novuelan]).
+animal(vaca,mamifero,[10,120,100,5000,0.9,-]).
 
 reptiles(X):-animal(X,Y,_),Y=reptil.
 moluscos(X,T):-animal(X,Y,[_,_,_,_,_,T]),Y=molusco.

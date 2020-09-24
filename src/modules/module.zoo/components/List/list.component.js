@@ -21,7 +21,6 @@ const ListComponent = props => {
     { value: 'longevidadMedia', label: 'Longevidad Normal' },
     { value: 'longevidadAlta', label: 'Longevidad Alta' },
     { value: 'peces', label: 'Pez' },
-    { value: 'anfibio', label: 'Anfibio' },
     { value: 'reptiles', label: 'Reptil' },
     { value: 'invertebrados', label: 'Invertebrado' },
     { value: 'vertebrados', label: 'Vertebrado' },
@@ -52,6 +51,7 @@ const ListComponent = props => {
         // Get the value of the response
         var X = answer.lookup("X");
         // Show answer
+        console.log(data)
         setData([...data,{nombre:X.id}])
       }
     };
