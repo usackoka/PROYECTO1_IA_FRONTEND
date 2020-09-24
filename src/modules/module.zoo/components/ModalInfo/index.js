@@ -16,7 +16,6 @@ const ModalInfo = props => {
     const { open, setOpen, info } = props;
 
     useEffect(() => {
-        console.log(info)
         if (info?.nombre) {
             setOpen(true);
         }

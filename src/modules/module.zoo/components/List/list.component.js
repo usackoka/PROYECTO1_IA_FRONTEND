@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import MaterialTable from 'material-table';
 import { useStyles } from './material.styles'
-import { Grid, Paper, Button, TextField, FormControlLabel, Form } from '@material-ui/core';
+import { Grid, Paper, Button, TextField } from '@material-ui/core';
 import Swal from 'sweetalert2';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
@@ -16,8 +16,9 @@ const ListComponent = props => {
   const animatedComponents = makeAnimated();
   const [tableVisible, setTableVisible] = useState(true)
   const [nombreBusqueda, setNombreBusqueda] = useState("")
-  const [open,setOpen] = useState(false)
+  const [open, setOpen] = useState(false)
   const [infoModal, setInfoModal] = useState({});
+  const [seleccionados, setSeleccionados] = useState([])
 
   const multiSelectValues = [
     { value: 'longevidadBaja', label: 'Longevidad Baja' },
@@ -32,61 +33,77 @@ const ListComponent = props => {
   const [columns, setColumns] = useState([
     { title: 'Nombre', field: 'nombre' },
     { title: 'Nombre cientifico', field: 'nombrec' },
-    { title: 'Información', 
+    {
+      title: 'Información',
       render: (row) => {
-        console.log(row)
-        return <Button 
-          color="primary" 
-          onClick={()=>{setInfoModal(row); setOpen(true)}}
-        >Ver más</Button>; 
+        return <Button
+          color="primary"
+          onClick={() => { setInfoModal(row); setOpen(true) }}
+        >Ver más</Button>;
       }
     }
   ]);
 
   const [data, setData] = useState([{
-    nombre:'Vaca',
+    nombre: 'Vaca',
     nombrec: 'Bos Taurus'
   }]);
 
-  const onSelectChange = (data,e) => {
+  const onSelectChange = (list, e) => {
     var query = "";
-    for(const item of data){
-      query += item.value+"(X),";
+    if (list) {
+      for (const item of list) {
+        query += item.value + "(X),";
+      }
+      query = query.substr(0, query.length - 1);
+      query += '.'
     }
-    query = query.substr(0,query.length-1);
-    query+='.'
-    
+
+    setSeleccionados(list)
     consultProlog(query)
   }
 
-  function getResults() {
+  function getResults(byName) {
     // Return callback function
-    return function(answer) {
+    return function (answer) {
       // Valid answer
-      if(pl.type.is_substitution(answer)) {
+      if (pl.type.is_substitution(answer)) {
         // Get the value of the response
         var X = answer.lookup("X");
         // Show answer
-        console.log(data)
+        if (byName) {
+          showMessage(true)
+        }
+        console.log(answer)
         //setData([...data,{nombre:X.id}])
       }
     };
   }
 
   const handleConsultar = (e) => {
+    var query = "";
+    const list = [...seleccionados]
+    if (list) {
+      for (const item of list) {
+        query += item.value + "(" + nombreBusqueda + "),";
+      }
+      query = query.substr(0, query.length - 1);
+      query += '.'
+    }
+    consultProlog(query, true)
     showMessage(false)
   }
 
   const showMessage = (posee) => {
     Swal.fire({
-      icon:posee?'success':'error',
-      title:posee?'Sí':'No',
-      text:'El animal '+(posee?'si':'no')+' poseé las características',
-      timer:4000
+      icon: posee ? 'success' : 'error',
+      title: posee ? 'Sí' : 'No',
+      text: 'El animal ' + (posee ? 'si' : 'no') + ' poseé las características',
+      timer: 4000
     })
   }
 
-  const consultProlog = async (query) => {
+  const consultProlog = async (query, byName = false) => {
     const getPrologBase = async () => {
       const res = await fetch(PATH_PROLOG_FILE);
       return res.text()
@@ -96,7 +113,7 @@ const ListComponent = props => {
 
     session.consult(`${fileContent}`);
     session.query(query)
-    session.answers(getResults(), 1000);
+    session.answers(getResults(byName), 1000);
   }
 
   useEffect(() => {
@@ -136,8 +153,8 @@ const ListComponent = props => {
               label="Nombre del animal"
               helperText="Nombre del animal a buscar"
             />
-            <Button 
-              variant="contained" 
+            <Button
+              variant="contained"
               onClick={handleConsultar}
               color="primary">Consultar</Button>
           </Paper>
