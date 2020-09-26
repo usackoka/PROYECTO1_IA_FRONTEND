@@ -7,6 +7,7 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import pl from 'tau-prolog'
 import ModalInfo from '../ModalInfo';
+import { db } from './../../../../firebase'
 
 const ListComponent = props => {
 
@@ -28,9 +29,15 @@ const ListComponent = props => {
     { value: 'reptiles', label: 'Reptil' },
     { value: 'invertebrados', label: 'Invertebrado' },
     { value: 'vertebrados', label: 'Vertebrado' },
+    { value: 'aves', label:'Ave' },
+    { value: 'mamiferos', label:'Mamifero' },
+    { value: 'nopuedenVolar', label:'No Vuela' },
+    { value: 'puedenVolar', label:'Vuela' },
+    { value: 'vulnerable', label:'Vulnerable'},
+    { value: 'sinPeligro', label:'Sin peligro'}
   ];
 
-  const [columns, setColumns] = useState([
+  const [columns] = useState([
     { title: 'Nombre', field: 'nombre' },
     { title: 'Nombre cientifico', field: 'nombrec' },
     {
@@ -38,16 +45,31 @@ const ListComponent = props => {
       render: (row) => {
         return <Button
           color="primary"
-          onClick={() => { setInfoModal(row); setOpen(true) }}
+          onClick={() => {
+            handleClickInfo(row)
+          }}
         >Ver más</Button>;
       }
     }
   ]);
 
   const [data, setData] = useState([{
-    nombre: 'Vaca',
+    nombre: 'vaca',
     nombrec: 'Bos Taurus'
   }]);
+
+  const handleClickInfo = (row) => {
+    db.collection('animales')
+      .where('nombre','==', row.nombre)
+      .get()
+      .then(function(querySnapshot){
+        querySnapshot.forEach(function (doc) {
+          console.log(doc.data())
+          setInfoModal(doc.data()); 
+          setOpen(true)
+        });
+      })
+  }
 
   const onSelectChange = (list, e) => {
     var query = "";
@@ -74,8 +96,7 @@ const ListComponent = props => {
         if (byName) {
           showMessage(true)
         }
-        console.log(answer)
-        //setData([...data,{nombre:X.id}])
+        console.log(X.id)
       }
     };
   }
@@ -116,9 +137,21 @@ const ListComponent = props => {
     session.answers(getResults(byName), 1000);
   }
 
+  const getAll = () => {
+    db.collection('animales').onSnapshot((querySnapshot) => {
+      let list = []
+      querySnapshot.forEach((doc) => {
+        list.push({
+          ...doc.data(), id: doc.id
+        })
+      });
+      setData(list)
+    });
+  }
+
   useEffect(() => {
     //muestro todos los animales al inicio
-    consultProlog('sienten(X).')
+    getAll();
   }, [])
 
   return (

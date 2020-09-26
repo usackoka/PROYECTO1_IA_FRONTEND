@@ -1,11 +1,46 @@
 
 % animales (id,categoria,[altura,peso,longevidad,poblacion,velocidad,extra])
-animal(serpiente,reptil,[0.5,120,5,5000,35,-]).
-animal(caracol,molusco,[1,3,9,000,35,marino]).
-animal(cangrejo,molusco,[3,120,20,6000,10,terrestre]).
-animal(pez_globo,pez,[10,120,45,5000,35,-]).
-animal(aguila,ave,[10,120,67,5000,0.3,vuelan]).
-animal(gallina,ave,[10,120,40,5000,1,novuelan]).
+%mamiferos
+animal(vaca_gyr,mamifero,[1.4,540,30,5000000,8,-]).
+%noimbrec: Bos primigenius indicus anatinus continente: Oceania
+animal(ornitorrinco,mamifero,[0.5,2.4,17,30000,10,-]).
+%noimbrec: Ornithorhynchus anatinus continente: Oceania
+animal(beluga,mamifero,[5.5,1600,60,150000,2.5,-]).
+%noimbrec: delphinapterus leucas continente: America, Europa, Africa, Oceania
+animal(chita,mamifero,[0.9,60,12,7100,32,-]).
+%noimbrec: Acinonyx jubatus continente: Africa
+
+%peces
+animal(pez_globo,pez,[1,2,5,5000,10,marino]).
+animal(pez_beta,pez,[0.7,0.20,3,500000,1,marino]).
+%nombrec : Betta splendens, COntinene: Asia
+animal(anguila_americana,pez,[0.5,4,20,4500,12,marino]).
+%nombrec : Anguilla rostrata, COntinene: America
+animal(tiburon_blanco,pez,[6.4,1100,30,10000,16,marino]).
+%nombrec :Carcharodon carcharias, COntinene: All
+animal(koi,pez,[1.2,40,10,1000000,4,marino]).
+%nombrec :Cyprinus carpio koi, COntinene: Asia
+animal(pez_payaso_comun,pez,[0.7,0.1,10,500000,1,marino]).
+%nombrec : Amphiprion ocellaris, COntinene: Asia, Europa, Africa
+
+%moluscos
+animal(caracol,molusco,[1,3,9,1000000,10,marino]).
+animal(cangrejo,molusco,[0.5,10,20,1000000,0.8,terrestre]).
+animal(pulpo,molusco,[5,50,50,1000000,10,marino]).
+
+%aves
+animal(gallina,ave,[0.5,3.4,10,1000000,3.88,novuelan]).
+animal(pinguino,ave,[1.2,23,20,600000,1.94,novuelan]).
+animal(aguila,ave,[1,6,20,600,44,vuelan]).
+animal(paloma,ave,[0.7,2,6,1000000,16.38,vuelan]).
+
+%reptiles
+animal(serpiente,reptil,[2.5,4,2.5,1000000,3.61,terrestre]).
+animal(cocodrilo,reptil,[5,500,5,200,6.66,marino]).
+animal(iguana,reptil,[0.3,4,15,1000000,4.16,terrestre]).
+animal(tortuga,reptil,[1.9,160,250,5000,1.38,terrestre]).
+
+%mamiferos
 animal(vaca,mamifero,[10,120,100,5000,0.9,-]).
 
 reptiles(X):-animal(X,Y,_),Y=reptil.
