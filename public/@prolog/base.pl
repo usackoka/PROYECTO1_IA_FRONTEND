@@ -33,6 +33,7 @@ animal(gallina,ave,[0.5,3.4,10,1000000,3.88,novuelan]).
 animal(pinguino,ave,[1.2,23,20,600000,1.94,novuelan]).
 animal(aguila,ave,[1,6,20,600,44,vuelan]).
 animal(paloma,ave,[0.7,2,6,1000000,16.38,vuelan]).
+animal(colibri,ave,[0.9,1,1,1000000,30,vuelan]).
 
 %reptiles
 animal(serpiente,reptil,[2.5,4,2.5,1000000,3.61,terrestre]).
