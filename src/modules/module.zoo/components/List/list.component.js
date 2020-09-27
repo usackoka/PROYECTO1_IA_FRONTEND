@@ -52,6 +52,7 @@ const ListComponent = props => {
     { value: 'respiran', label:'Respiran'},
     { value: 'noTienenHuesos', label:'No tienen huesos'},
     { value: 'sienten', label:'Sienten'},
+    { value: 'tomanLeche', label:'Toman leche'},
   ];
 
   const [columns] = useState([

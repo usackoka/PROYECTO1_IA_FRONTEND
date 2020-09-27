@@ -9,6 +9,7 @@ animal(beluga,mamifero,[5.5,1600,60,150000,2.5,-]).
 %noimbrec: delphinapterus leucas continente: America, Europa, Africa, Oceania
 animal(chita,mamifero,[0.9,60,12,7100,32,-]).
 %noimbrec: Acinonyx jubatus continente: Africa
+animal(mamut,mamifero,[20,1000,150,0,4,-]).
 
 %peces
 animal(pez_globo,pez,[1,2,5,5000,10,marino]).
