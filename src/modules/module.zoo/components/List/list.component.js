@@ -121,6 +121,7 @@ const ListComponent = props => {
         if (byName) {
           showMessage(true)
         }
+        console.log(X?.id)
       }
     };
   }
