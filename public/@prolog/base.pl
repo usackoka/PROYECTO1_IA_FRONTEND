@@ -109,8 +109,10 @@ vulnerable(X):-animal(X,_,[_,_,_,P,_,_]),P=<5000.
 sinPeligro(X):-animal(X,_,[_,_,_,P,_,_]),P>5000.
 
 %✓Si un animal pesa mas de 50 kg o mide mas de 1 m se dice que es un animal grande, de lo contrario se dice que es un animal pequeño.
-grande(X):-animal(X,_,[A,P,_,_,_,_]),not(not(P>50 , or , A>1)).
-pequeno(X):-animal(X,_,[A,P,_,_,_,_]),not(P>50 , or , A>1).
+grande(X) :-animal(X,,[,P,,,,]),P>50.
+grande(X) :-animal(X,,[A,,,,,]),A>1.
+pequeno(X):-animal(X,,[,P,,,,]),P=<50.
+pequeno(X):-animal(X,,[A,,,,,]),A=<1.
 
 %✓Si un animalse mueve a menos de 1 m/s es un animal lento.
 velocidadLenta(X):-animal(X,_,[_,_,_,_,V,_]),V<1.
