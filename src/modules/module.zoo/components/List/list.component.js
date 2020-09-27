@@ -119,11 +119,7 @@ const ListComponent = props => {
         var X = answer.lookup("X");
         // Show answer
         if (byName) {
-          if(X){
-            showMessage(true)
-          }else{
-            showMessage(false)
-          }
+          showMessage(true)
         }
         console.log(X?.id)
       }
@@ -135,12 +131,17 @@ const ListComponent = props => {
     const list = [...seleccionados]
     if (list) {
       for (const item of list) {
-        query += item.value + "(" + nombreBusqueda + "),";
+        if(item.value === "moluscos" || item.value === "aves"){
+          query += item.value + "("+nombreBusqueda+",_),";
+        }else{
+          query += item.value + "(" + nombreBusqueda + "),";
+        }
       }
       query = query.substr(0, query.length - 1);
       query += '.'
     }
     consultProlog(query, true)
+    showMessage(false)
   }
 
   const showMessage = (posee) => {
