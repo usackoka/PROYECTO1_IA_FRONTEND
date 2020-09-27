@@ -142,6 +142,7 @@ const ListComponent = props => {
   }
 
   const consultProlog = async (query, byName = false) => {
+    console.log("=========== NUEVA CONSULTA =============")
     const getPrologBase = async () => {
       const res = await fetch(PATH_PROLOG_FILE);
       return res.text()
@@ -152,6 +153,7 @@ const ListComponent = props => {
     session.consult(`${fileContent}`);
     session.query(query)
     session.answers(getResults(byName), 1000);
+    console.log("========================================")
   }
 
   const getAll = () => {

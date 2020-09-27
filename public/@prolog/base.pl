@@ -39,6 +39,7 @@ animal(serpiente,reptil,[2.5,4,2.5,1000000,3.61,terrestre]).
 animal(cocodrilo,reptil,[5,500,5,200,6.66,marino]).
 animal(iguana,reptil,[0.3,4,15,1000000,4.16,terrestre]).
 animal(tortuga,reptil,[1.9,160,250,5000,1.38,terrestre]).
+animal(dragon,reptil,[1.9,160,20,5000,1.38,terrestre]).
 
 %mamiferos
 animal(vaca,mamifero,[10,120,100,1000000,0.9,-]).
