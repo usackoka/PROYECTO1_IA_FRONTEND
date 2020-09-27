@@ -92,7 +92,11 @@ const ListComponent = props => {
     var query = "";
     if (list) {
       for (const item of list) {
-        query += item.value + "(X),";
+        if(item.value === "moluscos" || item.value === "aves"){
+          query += item.value + "(X,_),";
+        }else{
+          query += item.value + "(X),";
+        }
       }
       query = query.substr(0, query.length - 1);
       query += '.'
