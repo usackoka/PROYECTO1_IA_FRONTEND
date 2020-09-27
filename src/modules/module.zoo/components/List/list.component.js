@@ -31,10 +31,27 @@ const ListComponent = props => {
     { value: 'vertebrados', label: 'Vertebrado' },
     { value: 'aves', label:'Ave' },
     { value: 'mamiferos', label:'Mamifero' },
+    { value: 'moluscos', label:'Moluscos' },
     { value: 'nopuedenVolar', label:'No Vuela' },
     { value: 'puedenVolar', label:'Vuela' },
     { value: 'vulnerable', label:'Vulnerable'},
-    { value: 'sinPeligro', label:'Sin peligro'}
+    { value: 'sinPeligro', label:'Sin peligro'},
+    { value: 'sangreCaliente', label:'Sangre caliente'},
+    { value: 'tienenSangreFria', label:'Sangre fría'},
+    { value: 'moluscosMarinos', label:'Moluscos marinos'},
+    { value: 'tienenEscamas', label:'Tienen escamas'},
+    { value: 'vivenEnElAgua', label:'Viven en el agua'},
+    { value: 'ponenHuevos', label:'Ponen huevos'},
+    { value: 'extinta', label:'Extinta'},
+    { value: 'grande', label:'Grande'},
+    { value: 'pequeno', label:'Pequeño'},
+    { value: 'velocidadLenta', label:'Velocidad lenta'},
+    { value: 'velocidadrapida', label:'Velocidad rápida'},
+    { value: 'velocidadNormal', label:'Velocidad normal'},
+    { value: 'tienenVida', label:'Tienen vida'},
+    { value: 'respiran', label:'Respiran'},
+    { value: 'noTienenHuesos', label:'No tienen huesos'},
+    { value: 'sienten', label:'Sienten'},
   ];
 
   const [columns] = useState([
