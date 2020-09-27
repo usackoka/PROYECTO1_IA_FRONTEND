@@ -112,7 +112,7 @@ sinPeligro(X):-animal(X,_,[_,_,_,P,_,_]),P>5000.
 grande(X) :-animal(X,_,[_,P,_,_,_,_]),P>50.
 grande(X) :-animal(X,_,[A,_,_,_,_,_]),A>1.
 pequeno(X):-animal(X,_,[,P,_,_,_,_]),P=<50.
-pequeno(X):-animal(X,_,[A,_,_,_,_,_]),A=<1.
+pequeno(X):-animal(X,_,[A,_,_,_,_,_]),A>1.
 
 %✓Si un animalse mueve a menos de 1 m/s es un animal lento.
 velocidadLenta(X):-animal(X,_,[_,_,_,_,V,_]),V<1.
