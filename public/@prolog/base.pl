@@ -27,6 +27,8 @@ animal(pez_payaso_comun,pez,[0.7,0.1,10,500000,1,marino]).
 animal(caracol,molusco,[1,3,9,1000000,10,marino]).
 animal(cangrejo,molusco,[0.5,10,20,1000000,0.8,terrestre]).
 animal(pulpo,molusco,[5,50,50,1000000,10,marino]).
+animal(medusa,molusco,[5,20,1000000,10,marino]).
+animal(almeja,molusco,[0.1,1,20,1000000,0,terrestre]).
 
 %aves
 animal(gallina,ave,[0.5,3.4,10,1000000,3.88,novuelan]).
