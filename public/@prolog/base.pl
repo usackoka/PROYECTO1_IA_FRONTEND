@@ -41,7 +41,7 @@ animal(iguana,reptil,[0.3,4,15,1000000,4.16,terrestre]).
 animal(tortuga,reptil,[1.9,160,250,5000,1.38,terrestre]).
 
 %mamiferos
-animal(vaca,mamifero,[10,120,100,5000,0.9,-]).
+animal(vaca,mamifero,[10,120,100,1000000,0.9,-]).
 
 reptiles(X):-animal(X,Y,_),Y=reptil.
 moluscos(X,T):-animal(X,Y,[_,_,_,_,_,T]),Y=molusco.
