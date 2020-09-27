@@ -119,7 +119,11 @@ const ListComponent = props => {
         var X = answer.lookup("X");
         // Show answer
         if (byName) {
-          showMessage(true)
+          if(X){
+            showMessage(true)
+          }else{
+            showMessage(false)
+          }
         }
         console.log(X?.id)
       }
@@ -137,7 +141,6 @@ const ListComponent = props => {
       query += '.'
     }
     consultProlog(query, true)
-    showMessage(false)
   }
 
   const showMessage = (posee) => {
